@@ -3,19 +3,26 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Contracts\Routing\UrlGenerator;
 
 class Authenticate extends Middleware
 {
-    /**
-     * Get the path the user should be redirected to when they are not authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
-     */
+    protected UrlGenerator $urlGenerator;
+
+    public function __construct(Auth $auth, UrlGenerator $urlGenerator)
+    {
+        parent::__construct($auth);
+
+        $this->urlGenerator = $urlGenerator;
+    }
+
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login');
+            return $this->urlGenerator->route('login');
         }
+
+        return null;
     }
 }

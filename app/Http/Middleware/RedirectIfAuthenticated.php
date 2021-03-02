@@ -4,26 +4,35 @@ namespace App\Http\Middleware;
 
 use App\Providers\RouteServiceProvider;
 use Closure;
+use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Redirector;
 
 class RedirectIfAuthenticated
 {
+    protected Auth $auth;
+
+    protected Redirector $redirector;
+
+    public function __construct(Auth $auth, Redirector $redirector)
+    {
+        $this->auth       = $auth;
+        $this->redirector = $redirector;
+    }
+
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  ...$guards
+     * @param Request     $request
+     * @param Closure     $next
+     * @param string|null ...$guards
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle(Request $request, Closure $next, ?string ...$guards)
     {
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+            if ($this->auth->guard($guard)->check()) {
+                return $this->redirector->to(RouteServiceProvider::HOME);
             }
         }
 
