@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/development/Dockerfile
+    depends_on:
+      - nginx
+      - database
+      - redis
+    volumes:
+      - .:/var/www/html
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - 8000:80
+    volumes:
+      - .:/var/www/html
+      - ./docker/app/development/vhost.conf:/etc/nginx/conf.d/default.conf:ro
+
+  database:
+    image: mysql:8
+    restart: unless-stopped
+    ports:
+      - 33060:3306
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    volumes:
+      - mysql:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+
+volumes:
+  mysql:
+    driver: local
+
+networks:
+  default:
+    name: "${APP_SLUG}-network"
