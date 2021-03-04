@@ -35,3 +35,15 @@ test:
 
 ide-helper:
 	@docker-compose run --rm app php artisan ide-helper:model --reset --write
+
+phpcs: path ?= .
+phpcs: fix =
+phpcs: notices =
+phpcs:
+	@docker run --rm --volume ${CURDIR}:/project \
+	$(if ${fix},--entrypoint=phpcbf,) \
+	gitlab.pxlwidgets.com:8443/internal/docker/phpcs:latest \
+	${path} \
+	$(if ${notices},,-n) \
+	--standard=PXLWidgets \
+	--report=full

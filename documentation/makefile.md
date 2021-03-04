@@ -42,6 +42,23 @@ $ make destroy
 $ make test
 ```
 
+### PHPCS
+
+```bash
+$ make phpcs
+```
+
+**Options**
+
+* `path={value}`
+  By default all PHP files in the project will be scanned. Supply a path relative to the project's root directory as the value to scan a particular file or folder.
+
+* `fix={value}`
+  By default PHPCS will not automatically fix anything. If `fix` is present, it will auto-fix whatever is possible. The value does not matter, so something as `fix=1` will work.
+  
+* `notices={value}`
+  By default PHPCS will not show notices such as _"Line exceeds X characters"_. If `notices` is present, these message will show. The value does not matter, so something as `notices=1` will work.
+
 ## Utilities
 
 ### IDE Helper
