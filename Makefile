@@ -47,3 +47,11 @@ phpcs:
 	$(if ${notices},,-n) \
 	--standard=PXLWidgets \
 	--report=full
+
+larastan: paths =
+larastan: level =
+larastan:
+	@docker-compose run --rm app php ./vendor/phpstan/phpstan/phpstan analyse \
+	$(if ${level},--level=${level},) \
+	--memory-limit 1G
+	$(if ${paths},${paths},)
