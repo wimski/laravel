@@ -33,3 +33,11 @@ If you also want to remove the volumes use:
 ```bash
 $ make destroy
 ```
+
+## Code Quality
+
+### Tests
+
+```bash
+$ make test
+```
