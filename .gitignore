@@ -3,4 +3,5 @@
 /public/storage
 /storage/*.key
 /vendor
+_ide_helper.php
 phpunit.xml

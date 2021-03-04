@@ -24,7 +24,14 @@ setup:
 	@docker-compose exec app ./docker/wait-for database:3306 -t 600 -- echo "Database connection established"
 	@docker-compose exec app php artisan migrate:fresh
 	@docker-compose exec app php artisan db:seed
+	@docker-compose exec app php artisan ide-helper:meta
+	@docker-compose exec app php artisan ide-helper:generate
+	@docker-compose exec app php artisan ide-helper:eloquent
+	@make ide-helper
 
 test:
 	@docker-compose -f docker-compose-test.yaml run --rm test sh -c "php artisan config:clear \
 	&& php ./vendor/phpunit/phpunit/phpunit"
+
+ide-helper:
+	@docker-compose run --rm app php artisan ide-helper:model --reset --write

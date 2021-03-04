@@ -41,3 +41,13 @@ $ make destroy
 ```bash
 $ make test
 ```
+
+## Utilities
+
+### IDE Helper
+
+Re-write model doc blocks.
+
+```bash
+$ make ide-helper
+```
