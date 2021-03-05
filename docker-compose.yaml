@@ -35,6 +35,12 @@ services:
   redis:
     image: redis:alpine
 
+  node:
+    image: node:current-alpine
+    working_dir: /home/node/app
+    volumes:
+      - .:/home/node/app
+
 volumes:
   mysql:
     driver: local

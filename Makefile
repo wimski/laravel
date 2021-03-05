@@ -28,6 +28,8 @@ setup:
 	@docker-compose exec app php artisan ide-helper:generate
 	@docker-compose exec app php artisan ide-helper:eloquent
 	@make ide-helper
+	@docker-compose run --rm node npm install
+	@make assets
 
 test:
 	@docker-compose -f docker-compose-test.yaml run --rm test sh -c "php artisan config:clear \
@@ -55,3 +57,9 @@ larastan:
 	$(if ${level},--level=${level},) \
 	--memory-limit 1G
 	$(if ${paths},${paths},)
+
+assets:
+	@docker-compose run --rm node npm run dev
+
+watch:
+	@docker-compose run node npm run watch

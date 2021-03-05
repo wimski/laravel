@@ -73,6 +73,20 @@ $ make larastan
 * `level={value}`
   By default the level defined in `phpstan.neon.dist` will be used for analysis. Set the maximum level of analysis by supplying one of the [valid PHPStan levels](https://phpstan.org/user-guide/rule-levels).
 
+## Assets
+
+Compile assets.
+
+```bash
+$ make assets
+```
+
+Watch assets.
+
+```bash
+$ make watch
+```
+
 ## Utilities
 
 ### IDE Helper
