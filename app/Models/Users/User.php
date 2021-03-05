@@ -16,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
 /**
  * App\Models\Users\User
  *
- * @property int $id
+ * @property string $id
  * @property string $name
  * @property string $email
  * @property \Carbon\Carbon|null $email_verified_at

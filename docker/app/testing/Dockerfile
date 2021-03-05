@@ -9,12 +9,14 @@ RUN apk add --no-cache --virtual .build-deps \
         libtool \
         libxml2-dev \
         oniguruma-dev \
+        postgresql-dev \
     && apk add --no-cache \
     	git \
     	imagemagick \
         libzip-dev \
     	mysql-client \
         jpeg-dev \
+        postgresql-client \
     	shadow \
     && pecl install \
         imagick \
@@ -23,12 +25,14 @@ RUN apk add --no-cache --virtual .build-deps \
         imagick \
         pcov \
     && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install \
         bcmath \
         gd \
         mbstring \
         pdo \
-        pdo_mysql \
+        pdo_pgsql \
+        pgsql \
         tokenizer \
         xml \
         zip \

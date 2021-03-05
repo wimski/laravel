@@ -21,7 +21,7 @@ setup:
 	@docker-compose exec app php artisan key:generate
 	@docker-compose exec app sh -c 'test -h ./public/storage || php artisan storage:link'
 	@docker-compose exec app sh -c 'echo "Waiting for database connection..."'
-	@docker-compose exec app ./docker/wait-for database:3306 -t 600 -- echo "Database connection established"
+	@docker-compose exec app ./docker/wait-for database:5432 -t 600 -- echo "Database connection established"
 	@docker-compose exec app php artisan migrate:fresh
 	@docker-compose exec app php artisan db:seed
 	@docker-compose exec app php artisan ide-helper:meta
