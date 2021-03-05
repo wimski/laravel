@@ -13,4 +13,9 @@ class UserRepository implements UserRepositoryInterface
     {
         $this->resource = $resource;
     }
+
+    public function create(array $attributes): User
+    {
+        return $this->resource::create($attributes);
+    }
 }
